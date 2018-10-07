@@ -127,3 +127,8 @@ func (om *OrderedMap) ForEach(f func(v Keyer) bool) error {
 	}
 	return nil
 }
+
+// Order returns order, which id represented as array of Keyer's key
+func (om *OrderedMap) Order() []string {
+	return om.order
+}
