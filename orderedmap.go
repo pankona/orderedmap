@@ -104,7 +104,7 @@ func (om *OrderedMap) GetByIndex(index int) Keyer {
 	return om.m[key]
 }
 
-// GetByIndex returns an element from OrderedMap by specified key.
+// GetByKey returns an element from OrderedMap by specified key.
 // If there's no element that has specified key, this function returns nil.
 func (om *OrderedMap) GetByKey(key string) Keyer {
 	return om.m[key]
