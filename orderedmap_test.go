@@ -26,6 +26,26 @@ func TestAdd(t *testing.T) {
 	require.Equal(t, om.Len(), 1)
 }
 
+func TestInsert(t *testing.T) {
+	om := New()
+	require.NotNil(t, om)
+
+	for i := 0; i < 100; i++ {
+		v := keyable(i)
+		err := om.Add(v)
+		require.Nil(t, err, "test case [%d] failed", i)
+		require.Equal(t, om.Len(), i+1)
+	}
+
+	v1 := keyable(500)
+	err := om.Insert(v1, 50)
+	require.Nil(t, err, "failed to insert")
+
+	v2 := om.GetByIndex(50)
+	require.Equal(t, v1, v2)
+	require.Equal(t, om.Len(), 101)
+}
+
 func TestUpdate(t *testing.T) {
 	om := New()
 	require.NotNil(t, om)
