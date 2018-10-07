@@ -27,12 +27,7 @@ func New() *OrderedMap {
 // Add registers a new Keyer element on tail of OrderedMap.
 // If specified Keyer's Key() is already registered, this function returns error.
 func (om *OrderedMap) Add(v Keyer) error {
-	if _, ok := om.m[v.Key()]; ok {
-		return fmt.Errorf("specified key [%s] is already registered", v.Key())
-	}
-	om.order = append(om.order, v.Key())
-	om.m[v.Key()] = v
-	return nil
+	return om.Insert(v, om.Len())
 }
 
 // Insert inserts a new Keyer element on specified index of OrderedMap.
@@ -41,8 +36,14 @@ func (om *OrderedMap) Insert(v Keyer, index int) error {
 	if _, ok := om.m[v.Key()]; ok {
 		return fmt.Errorf("specified key [%s] is already registered", v.Key())
 	}
-	om.order = append(om.order[:index+1], om.order[index:]...)
-	om.order[index] = v.Key()
+
+	if om.Len() == index {
+		// just append
+		om.order = append(om.order, v.Key())
+	} else {
+		om.order = append(om.order[:index+1], om.order[index:]...)
+		om.order[index] = v.Key()
+	}
 	om.m[v.Key()] = v
 	return nil
 }
