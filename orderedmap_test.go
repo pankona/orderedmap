@@ -65,6 +65,27 @@ func TestInsert(t *testing.T) {
 	require.Equal(t, v1, v2)
 }
 
+func TestSwap(t *testing.T) {
+	om := New()
+	require.NotNil(t, om)
+
+	v1 := keyable(1)
+	err := om.Add(v1)
+	require.Nil(t, err)
+	require.Equal(t, om.Len(), 1)
+
+	v2 := keyable(2)
+	err = om.Add(v2)
+	require.Nil(t, err)
+	require.Equal(t, om.Len(), 2)
+
+	om.Swap(0, 1)
+
+	require.Equal(t, om.GetByIndex(0), v2)
+	require.Equal(t, om.GetByIndex(1), v1)
+	require.Equal(t, om.Len(), 2)
+}
+
 func TestUpdate(t *testing.T) {
 	om := New()
 	require.NotNil(t, om)

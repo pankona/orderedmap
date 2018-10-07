@@ -48,6 +48,11 @@ func (om *OrderedMap) Insert(v Keyer, index int) error {
 	return nil
 }
 
+// Swap swaps order of elements by specified indexes
+func (om *OrderedMap) Swap(i1, i2 int) {
+	om.order[i1], om.order[i2] = om.order[i2], om.order[i1]
+}
+
 // Update updates a Keyer element that is already registered on OrderedMap.
 // If specified Keyer's Key() is not registered yet, this function returns error.
 func (om *OrderedMap) Update(v Keyer) error {
