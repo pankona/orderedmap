@@ -176,10 +176,8 @@ func TestForEach(t *testing.T) {
 		require.Equal(t, om.Len(), i+1)
 	}
 
-	var index int
-	om.ForEach(func(v Keyer) bool {
-		require.Equal(t, v, keyable(index), "test case [%d] failed", index)
-		index++
-		return true
+	om.ForEach(func(i int, v Keyer) error {
+		require.Equal(t, v, keyable(i), "test case [%d] failed", i)
+		return nil
 	})
 }

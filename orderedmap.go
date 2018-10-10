@@ -117,12 +117,12 @@ func (om *OrderedMap) GetByKey(key string) Keyer {
 
 // ForEach calls specified function with specifying registered Keyer elements
 // in ordered of the elements registered.
-// If specified function returns false, this function stops iteration and return error.
-func (om *OrderedMap) ForEach(f func(v Keyer) bool) error {
-	for _, key := range om.order {
-		cont := f(om.m[key])
-		if !cont {
-			return fmt.Errorf("ForEach iteration stopped at [%s]", key)
+// If specified function returns error, this function stops iteration and return error.
+func (om *OrderedMap) ForEach(f func(i int, v Keyer) error) error {
+	for i, key := range om.order {
+		err := f(i, om.m[key])
+		if err != nil {
+			return err
 		}
 	}
 	return nil
