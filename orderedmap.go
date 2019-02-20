@@ -37,7 +37,7 @@ func (om *OrderedMap) Insert(v Keyer, index int) error {
 		return fmt.Errorf("specified key [%s] is already registered", v.Key())
 	}
 
-	if om.Len() == index {
+	if om.Len() <= index {
 		// just append
 		om.order = append(om.order, v.Key())
 	} else {
